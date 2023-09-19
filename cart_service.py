@@ -27,7 +27,7 @@ def add_to_cart(user_id, product_id):
     if product:
 
         if product['quantity'] < quantity:
-            return jsonify({"error": "Product does not has enough quantity"}), 404
+            return jsonify({"error": "Product quantity in product service is not enough"}), 404
 
         if user_id not in carts:
             carts[user_id] = {}
@@ -54,9 +54,12 @@ def remove_from_cart(user_id, product_id):
     product = get_product_from_product_service(product_id)
 
     if user_id in carts and product_id in carts[user_id]:
-        if carts[user_id][product_id]['quantity'] > quantity:
-            carts[user_id][product_id]['quantity'] -= quantity 
+        if carts[user_id][product_id]['quantity'] >= quantity:
+            carts[user_id][product_id]['quantity'] -= quantity
         else:
+            return jsonify({"error": "Product quantity in the cart is not enough"}), 404
+
+        if  carts[user_id][product_id]['quantity'] == 0:
             del carts[user_id][product_id]
 
         # Make a request to update the product quantity in product_service
@@ -80,10 +83,15 @@ def update_product_quantity(product_id, new_quantity):
         f"{PRODUCT_SERVICE_URL}/products/{product_id}/update_quantity",
         json=data
     )
-    if response.status_code != 200:
-        # Handle error if needed
-        return response.json()
 
+    if response.status_code == 200:
+        return {"message": "Product quantity updated successfully"}
+    elif response.status_code == 404:
+        return {"error": "Product not found"}
+    else:
+        # Log the error for debugging
+        print(f"Error: {response.status_code} - {response.text}")
+        return {"error": "An unexpected error occurred"}
 
 if __name__ == '__main__':
     app.run(debug=True, port=5001)

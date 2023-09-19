@@ -3,8 +3,8 @@ from flask import Flask, request, jsonify
 # Initialize the Flask application
 app = Flask(__name__)
 
-# Sample product data
-products = [
+# Sample product data (initial state)
+initial_products = [
     {
         "id": 1,
         "name": "Product 1",
@@ -17,13 +17,16 @@ products = [
         "price": 5.99,
         "quantity": 100,
     },
-        {
+    {
         "id": 3,
         "name": "Product 3",
         "price": 7.99,
         "quantity": 50,
     }
 ]
+
+# Initialize products with the initial state
+products = initial_products.copy()
 
 # Route to retrieve a list of available grocery products
 @app.route('/products', methods=['GET'])
@@ -67,5 +70,12 @@ def update_product_quantity(product_id):
     else:
         return jsonify({"error": "Product not found"}), 404
 
+# Route to reset the products to their initial state
+@app.route('/products/reset', methods=['POST'])
+def reset_products():
+    global products  # Use the global products list
+    products = initial_products.copy()  # Reset products to initial state
+    return jsonify({"message": "Products reset to initial state"}), 200
+    
 if __name__ == '__main__':
     app.run(debug=True)
