@@ -11,7 +11,7 @@ carts = {}
 PRODUCT_SERVICE_URL_LOCAL = "http://127.0.0.1:5000"
 PRODUCT_SERVICE_URL_RENDER = "https://product-service-vikw.onrender.com"
 
-PRODUCT_SERVICE_URL = PRODUCT_SERVICE_URL_LOCAL
+PRODUCT_SERVICE_URL = PRODUCT_SERVICE_URL_RENDER
 
 # Route to retrieve the current contents of a user's shopping cart
 @app.route('/cart/<int:user_id>', methods=['GET'])
