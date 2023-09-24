@@ -58,6 +58,7 @@ def add_product():
     else:
         return jsonify({"error": "Invalid product data"}), 400
 
+# Route to update the quantity of the product by its unique ID
 @app.route('/products/<int:product_id>/update_quantity', methods=['POST'])
 def update_product_quantity(product_id):
     data = request.get_json(force=True)
