@@ -1,0 +1,156 @@
+
+# This file is used to store commands for testing the applications locally.
+
+----------------------------------------------------------------------------------------------------
+
+PRODUCT https://product-service-vikw.onrender.com (Render)
+        http://127.0.0.1:5000/products (Local)
+
+----------------------------------------------------------------------------------------------------
+
+    /products (GET):
+
+$response = Invoke-WebRequest -Uri "http://127.0.0.1:5000/products"
+$response.Content
+$response = $null
+
+$response = Invoke-WebRequest -Uri "https://product-service-vikw.onrender.com/products"
+$response.Content
+$response = $null
+
+curl http://127.0.0.1:5000/products
+curl https://product-service-vikw.onrender.com/products
+
+----------------------------------------------------------------------------------------------------
+
+    /products/product id (GET):
+
+$response = Invoke-WebRequest -Uri "http://127.0.0.1:5000/products/1"
+$response.Content
+$response = $null
+
+$response = Invoke-WebRequest -Uri "https://product-service-vikw.onrender.com/products/1"
+$response.Content
+$response = $null
+
+curl http://127.0.0.1:5000/products/1
+
+curl https://product-service-vikw.onrender.com/products/1
+
+----------------------------------------------------------------------------------------------------
+
+    /products (POST):
+
+$response = Invoke-WebRequest -Uri "http://127.0.0.1:5000/products" -Method POST -Headers @{"Content-Type"="application/json"} -Body '{"name": "New Product", "price": 12.99, "quantity": 30}'
+$response.Content
+$response = $null
+
+$response = Invoke-WebRequest -Uri "http://127.0.0.1:5000/products" -Method POST -Headers @{"Content-Type"="application/json"} -Body '{"name": "New Product", "price": 2.99, "quantity": 20}'
+$response.Content
+$response = $null
+
+curl -X POST -H "Content-Type: application/json" -d '{"name": "New Product", "price": 2.99, "quantity": 20}' http://127.0.0.1:5000/products
+
+$response = Invoke-WebRequest -Uri "https://product-service-vikw.onrender.com/products" -Method POST -Headers @{"Content-Type"="application/json"} -Body '{"name": "New Product", "price": 12.99, "quantity": 30}'
+$response.Content
+$response = $null
+
+$response = Invoke-WebRequest -Uri "https://product-service-vikw.onrender.com/products" -Method POST -Headers @{"Content-Type"="application/json"} -Body '{"name": "New Product", "price": 2.99, "quantity": 20}'
+$response.Content
+$response = $null
+
+----------------------------------------------------------------------------------------------------
+
+    /products/reset (POST):
+
+$response = Invoke-WebRequest -Uri "http://127.0.0.1:5000/products/reset" -Method POST -Headers @{"Content-Type"="application/json"}
+$response.Content
+$response = $null
+
+$response = Invoke-WebRequest -Uri "https://product-service-vikw.onrender.com/products/reset" -Method POST -Headers @{"Content-Type"="application/json"}
+$response.Content
+$response = $null
+
+----------------------------------------------------------------------------------------------------
+
+
+
+
+
+----------------------------------------------------------------------------------------------------
+
+CART https://cart-service-he5s.onrender.com (Render)
+     http://127.0.0.1:5001/cart/1 (Local)
+
+----------------------------------------------------------------------------------------------------
+
+    /cart/{user id} (GET):
+
+$response = Invoke-WebRequest -Uri "http://127.0.0.1:5001/cart/1"
+$response.Content
+$response = $null
+
+$response = Invoke-WebRequest -Uri "http://127.0.0.1:5001/cart/2"
+$response.Content
+$response = $null
+
+$response = Invoke-WebRequest -Uri "http://127.0.0.1:5001/cart/5"
+$response.Content
+$response = $null
+
+$response = Invoke-WebRequest -Uri "https://cart-service-he5s.onrender.com/cart/1"
+$response.Content
+$response = $null
+
+$response = Invoke-WebRequest -Uri "https://cart-service-he5s.onrender.com/cart/2"
+$response.Content
+$response = $null
+
+curl http://127.0.0.1:5001/cart/1
+curl https://cart-service-he5s.onrender.com/cart/1
+
+----------------------------------------------------------------------------------------------------
+
+    /cart/{user id}/add/{product id} (POST):
+
+$response = Invoke-WebRequest -Uri "http://127.0.0.1:5001/cart/1/add/1" -Method POST -Headers @{"Content-Type"="application/json"} -Body '{"quantity": 2}'
+$response.Content
+$response = $null
+
+$response = Invoke-WebRequest -Uri "http://127.0.0.1:5001/cart/1/add/3" -Method POST -Headers @{"Content-Type"="application/json"} -Body '{"quantity": 2}'
+$response.Content
+$response = $null
+
+$response = Invoke-WebRequest -Uri "https://cart-service-he5s.onrender.com/cart/1/add/1" -Method POST -Headers @{"Content-Type"="application/json"} -Body '{"quantity": 2}'
+$response.Content
+$response = $null
+
+$response = Invoke-WebRequest -Uri "https://cart-service-he5s.onrender.com/cart/1/add/3" -Method POST -Headers @{"Content-Type"="application/json"} -Body '{"quantity": 2}'
+$response.Content
+$response = $null
+
+$response = Invoke-WebRequest -Uri "https://cart-service-he5s.onrender.com/cart/2/add/4" -Method POST -Headers @{"Content-Type"="application/json"} -Body '{"quantity": 31}'
+$response.Content
+$response = $null
+
+----------------------------------------------------------------------------------------------------
+
+    /cart/{user id}/remove/{product id} (POST):
+
+$response = Invoke-WebRequest -Uri "http://127.0.0.1:5001/cart/1/remove/1" -Method POST -Headers @{"Content-Type"="application/json"} -Body '{"quantity": 1}'
+$response.Content
+$response = $null
+
+$response = Invoke-WebRequest -Uri "http://127.0.0.1:5001/cart/1/remove/4" -Method POST -Headers @{"Content-Type"="application/json"} -Body '{"quantity": 31}'
+$response.Content
+$response = $null
+
+$response = Invoke-WebRequest -Uri "https://cart-service-he5s.onrender.com/cart/1/remove/1" -Method POST -Headers @{"Content-Type"="application/json"} -Body '{"quantity": 1}'
+$response.Content
+$response = $null
+
+$response = Invoke-WebRequest -Uri "https://cart-service-he5s.onrender.com/cart/2/remove/4" -Method POST -Headers @{"Content-Type"="application/json"} -Body '{"quantity": 31}'
+$response.Content
+$response = $null
+
+----------------------------------------------------------------------------------------------------

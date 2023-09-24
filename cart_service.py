@@ -7,11 +7,11 @@ app = Flask(__name__)
 # Sample cart data (in-memory storage for simplicity)
 carts = {}
 
-# Product Service URL (Update with the actual URL)
+# Product Service URL
 PRODUCT_SERVICE_URL_LOCAL = "http://127.0.0.1:5000"
 PRODUCT_SERVICE_URL_RENDER = "https://product-service-vikw.onrender.com"
 
-PRODUCT_SERVICE_URL = PRODUCT_SERVICE_URL_RENDER
+PRODUCT_SERVICE_URL = PRODUCT_SERVICE_URL_LOCAL
 
 # Route to retrieve the current contents of a user's shopping cart
 @app.route('/cart/<int:user_id>', methods=['GET'])
@@ -72,7 +72,7 @@ def remove_from_cart(user_id, product_id):
     else:
         return jsonify({"error": "Product not found in the cart"}), 404
 
-# Helper function to get product information from the Product Service
+# (HELPER) Function to get product information from the Product Service
 def get_product_from_product_service(product_id):
     response = requests.get(f"{PRODUCT_SERVICE_URL}/products/{product_id}")
     if response.status_code == 200:
@@ -80,7 +80,7 @@ def get_product_from_product_service(product_id):
     else:
         return None
 
-# Helper function to update product quantity from the Product Service
+# (HELPER) Function to update product quantity from the Product Service
 def update_product_quantity(product_id, new_quantity):
     data = {"quantity": new_quantity}
     response = requests.post(
